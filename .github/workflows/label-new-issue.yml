@@ -17,18 +17,16 @@ jobs:
       uses: actions/github-script@v6
       with:
         script: |
-          const { github, context } = require('@actions/github');
           const issueLabels = await github.rest.issues.listLabelsOnIssue({
             owner: context.repo.owner,
             repo: context.repo.repo,
             issue_number: context.issue.number
           });
-          return issueLabels.data.length === 0;
+          return { hasNoLabels: issueLabels.data.length === 0 };
 
     - name: Add 'new issue' label
-      if: steps.check_labels.outputs.result == 'true'
+      if: steps.check_labels.outputs.hasNoLabels == 'true'
       uses: actions-ecosystem/action-add-labels@v1
       with:
         github_token: ${{ secrets.GITHUB_TOKEN }}
         labels: 'new issue'
-        repo: 'Nikita-FH/CodeSpaceTest'
