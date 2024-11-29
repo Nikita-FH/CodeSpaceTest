@@ -4,6 +4,9 @@ on:
   issues:
     types: [opened]
 
+permissions:
+  issues: write
+
 jobs:
   add-label:
     runs-on: ubuntu-latest
@@ -14,3 +17,4 @@ jobs:
       with:
         github_token: ${{ secrets.GITHUB_TOKEN }}
         labels: 'new issue'
+        repo: 'Nikita-FH/CodeSpaceTest'
