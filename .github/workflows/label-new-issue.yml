@@ -17,7 +17,8 @@ jobs:
       uses: actions/github-script@v6
       with:
         script: |
-          const issueLabels = await github.issues.listLabelsOnIssue({
+          const { github, context } = require('@actions/github');
+          const issueLabels = await github.rest.issues.listLabelsOnIssue({
             owner: context.repo.owner,
             repo: context.repo.repo,
             issue_number: context.issue.number
